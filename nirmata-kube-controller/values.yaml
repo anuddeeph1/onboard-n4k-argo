@@ -62,7 +62,7 @@ cluster: onboarding-using-argo
 
 # api token is just for registering the cluster to Nirmata Control Hub.
 # This token is required for the nirmata-kube-controller to communicate with the Nirmata Control Hub. (Required)
-apiToken: "rc9YiREZ5gphOlYH7D8E41hun08y7N5xOpBr9ZGv0vhIecri14GqCptT+nm+nHiUYQG5FBGoSxYehLadJ2Tu1Q=="
+apiToken: 
 
 # apiTokenSecret is the name of the secret containing the API token.
 apiTokenSecret: "nirmata-api-token"

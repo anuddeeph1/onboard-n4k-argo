@@ -1,0 +1,88 @@
+# # Default values for nirmata-kube-controller.
+# # This is a YAML-formatted file.
+# # Declare variables to be passed into your templates.
+
+# Specifies the WebSocket URL for connecting to the Nirmata service.
+nirmataURL: "wss://nirmata.io/tunnels"
+
+# Defines the Kubernetes namespace where the Nirmata components will be deployed.
+namespace: "nirmata"
+
+#  Contains global configuration settings that is applied across different components.
+global:
+  # The container registry from which images will be pulled.
+  # Replace with your desired container registry.
+  imageRegistry: 844333597536.dkr.ecr.us-west-1.amazonaws.com
+  # The repository from which images will be pulled.
+  # Replace with your desired container repository.
+  imageRepository: nirmata
+  # Credentials for the private container registry (if required).
+  registryUserName: AWS
+  registryPassword: eyJwYXlsb2FkIjoiaFVQTzJINlEvWDVyc0lUbS9CODd5RDh5ZVpNYTJMZHA5VnJUVitLMVhVYW11K1FPdEJoRVFKbDJoanN2QU5HRkpwMng3UEZFcGM4N2kxczMzYXJ0TkhFWGFlTSt5K2RLV2lVQnVkdnRHSTJPV1IyZGtyV1JHM1hTOWc1MEZrUHkvWUlDa1dTbXNGclRzemxXRHBzK2pPbjVwRW94L0FYdDZLZFIyMjVnNVVGZkZaRnlJckh4bm9SWGJ0QmRYODRHMzQvVE9OQk8rUmRxditqaHptQnlmRTBtejhvZmgzUWIzUTJ3TndOeDl3dnROKzFHOFhNVVRQYThLbG1DcHBXZEtzN0lIbG5Wa3Z0WWxnTForWE9RRTBDNkViN3VwV2FJRWdIaXJtL2tLQTM1UnUxRnplUmRqbWhjY1BpOE5YdEFUVEZ5Z0Y4b0xLRE9sNXVHRkJveUY3UUZqLzZRSlduQmFvZVFuTE5oMEdPVnB5TUxCWUEzeGxUYXVNT0l4c0pzMUYrODI2Vk9tU1JZUVRGS3dla2JxL0Y2QlVzR2hPT2UrTEFlR1ZscGZ0K0dGL1kvRG4yRTF1U1crMXpEdEI5eURaWWNwU1kxWXIyZ1RRNUZsSVAzM0FLWHpYSlhSVXI3amtLOU1Wc1E2NzRONU1mdGRDQ2EvelVJVE1Ia0x0b0wwdGxaQ21JbUdEZ25vOXAwZjhCNTlYZy9DcTFKVVBiT2doSTh2UmJCTnFJMkZvd3lsaVBpbURBelFkWXlndjYxTDhMeHhBLzBEUmxNUWNyeVVNZnh0dnV0RFo5aXM4RHF4L2kzR1ozTk1YeklzMk5Yc3I1Z1JwcWovNm5hRVdZMUJXZnB6K09OM29sc1E1ajhhenZ4NEp5Z0hvYWZxOWdTSjlZSEJONUtnVjRjbGZVVHBES2lGUHlEWkF3LzE1bmx0cHB6RWVCTzZPdkk1U01mQnhUeHlrTUtVVTNNbFhVMzRsOWtpb1ZoRXg4MmhHY1dnbHprdHBvT0VadTVXRzRKeU9RQllUMjFCYXh3N2VTMkJlV2ozUVoxNTFUT21TRDlIODUyNTc4K1MrRTgyczFsV3F4VER4TUZEZnhaNm9ZOG5CNnAwdGplQWJCNHFCZGp4enNsajZuZDNVK3FBQXFRVEtuQStZQkFoZEltR2JsVy95WS9pOGxLU3BaQWNWVGdCcEF4aGRYZXczMDdsa3k4Qll5QkgrR1NDVWJHQmgwL3pQQktrQkZtQksrY1dHeWEyMmI5UTBMaDh1MDh0Zkh5VmJxRzl3R254TXczSXNabmQ3aDh0MWd5YU91SDhwR2JOVFVMU1g5clVpWjNvVmVRc2dOR2w5VVg3VFJkIiwiZGF0YWtleSI6IkFRRUJBSGlqRUZYR3dGMWNpcFZPYWNHOHFSbUpvVkJQYXk4TFVVdlU4UkNWVjBYb0h3QUFBSDR3ZkFZSktvWklodmNOQVFjR29HOHdiUUlCQURCb0Jna3Foa2lHOXcwQkJ3RXdIZ1lKWUlaSUFXVURCQUV1TUJFRURNcE8vWXA2UGpCQ05uTDdpQUlCRUlBN003T0lpN3E0cjE3S0dFaXZyb0hURnFKTmh1Qy9Bc25Lbk5BY0xiVnFHZHlMYlhXS1NEYTVERW5lZ1FVSUJsbVhUOFFFQXNmK1k3UDZrVnM9IiwidmVyc2lvbiI6IjIiLCJ0eXBlIjoiREFUQV9LRVkiLCJleHBpcmF0aW9uIjoxNzQ3OTc0MzY1fQ==
+  imagePullSecretName: nirmata-controller-registry-secret
+
+# otelAgent contains configuration for the nirmata otel agent, which is used for observability and monitoring.
+otelAgent:
+  # imageTag is the tag or version of the otel-agent image.
+  imageTag: "0.92.0"
+
+# kubeController contains configuration for the nirmata-kube-controller.
+kubeController:
+  # imageTag is the tag or version of the nirmata-kube-controller image. If added, it will override the  .Chart.AppVersion
+  imageTag: ""
+  # customCACert contains the custom CA certificate data in base64 encoded format
+  customCACert: ""
+  # customCaConfigMap specifies an existing ConfigMap containing CA certificate. If provided, this will be used instead of creating a new ConfigMap from customCACert
+  customCaConfigMap: ""
+  # insecure enables insecure communication with the Nirmata service (skips TLS verification)
+  insecure: false
+
+# cluster contains configuration related to the Kubernetes cluster which is being onboarded to NCH.
+cluster: onboarding-using-argo
+# name used for cluster by nch (Default: kubesystem namespace ID)
+  name: "onboarding-using-argo"
+
+# type of the cluster categorised by nch. (Default value is "default-policy-manager-type")
+  type: default-policy-manager-type
+
+# labels is a set of key-value pairs that can be used to label the cluster while onboarding the cluster to Nirmata Control Hub.
+# These labels are passed as command-line arguments to the Nirmata Kubernetes controller in the deployment.
+# Example:
+# labels:
+#   key1: value1
+#   key2: value2
+#
+# When set, the labels are reflected in the Helm template as follows:
+# In the `deployment.yaml`:
+#       - "-cluster-labels"
+#       - "key1:value1"
+#       - "-cluster-labels"
+#       - "key2:value2"
+  labels: {}
+
+# api token is just for registering the cluster to Nirmata Control Hub.
+# This token is required for the nirmata-kube-controller to communicate with the Nirmata Control Hub. (Required)
+apiToken: "/X/1WIaVR9xI2IiIQdr+6/4TcFOiXcsvTqsFBGrLOERMIUYo66UypNJ54NChjboqEhOCI9ZHbx02aLfwYeQlWw=="
+
+# apiTokenSecret is the name of the secret containing the API token.
+apiTokenSecret: "nirmata-api-token"
+
+# features enables or disables specific features while installing kube-controller.
+# features:
+#   policyExceptions:
+#     enabled: true
+#   policySets:
+#     enabled: true
+
+# readWriteMode determines whether the nirmata-kube-controller operates in read-write mode or read-only mode.
+# When set to `true`, the controller can make changes to the CR. When `false`, it operates in a read-only manner.
+readWriteMode: true
+
+# proxy contains configuration for proxy settings if the KubeController needs to communicate through a proxy.
+proxy:
+ # httpProxy is the HTTP proxy URL.
+  httpProxy: ""
+ # httpsProxy is the HTTPS proxy URL.
+  httpsProxy: ""
+ # noProxy is a comma-separated list of domains or IP addresses that should bypass the proxy.
+  noProxy: ""

@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: v0.4.6
+appVersion: v0.4.7-rc3
 dependencies:
 - condition: crds.install
   name: crds
@@ -19,4 +19,4 @@ maintainers:
   url: https://nirmata.com/
 name: nirmata-kyverno-operator
 type: application
-version: v0.5.9
+version: v0.7.0

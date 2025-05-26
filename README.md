@@ -36,14 +36,12 @@ This repository contains the ArgoCD applications for deploying Nirmata's N4K (Ni
 
 The following container images need to be pushed to your ECR repository:
 
-### Public Images (from ghcr.io)
 - `ghcr.io/nirmata/nirmata-kube-controller:v3.10.9`
 - `ghcr.io/nirmata/opentelemetry-collector:0.92.0`
 - `ghcr.io/nirmata/nirmata-kyverno-operator:v0.4.7`
+- `ghcr.io/nirmata/nirmata-kyverno-operator:v0.4.7-rc3`
 - `ghcr.io/nirmata/etcd:v3.5.18-cve-free`
 - `ghcr.io/nirmata/kubectl:1.30.2`
-
-### Private Registry Images (from reg.nirmata.io)
 - `reg.nirmata.io/nirmata/kyverno:v1.13.6-n4k.nirmata.1`
 - `reg.nirmata.io/nirmata/kyvernopre:v1.13.6-n4k.nirmata.1`
 - `reg.nirmata.io/nirmata/background-controller:v1.13.6-n4k.nirmata.1`

@@ -17,16 +17,17 @@ replicaCount: 1
 envVars: []
 
 image:
-  repository: 844333597536.dkr.ecr.us-west-1.amazonaws.com/nirmata/nirmata-kyverno-operator
+  repository: ghcr.io/nirmata/nirmata-kyverno-operator
   # Defaults to chart appVersion
   tag:
   pullPolicy: IfNotPresent
   pullSecrets:
-    registry: 844333597536.dkr.ecr.us-west-1.amazonaws.com
+    registry: ghcr.io
     name: image-pull-secret
-    create: true
-    username: AWS
-    password: 
+    create: false
+    username:
+    password:
+
 
 rbac:
   create: true

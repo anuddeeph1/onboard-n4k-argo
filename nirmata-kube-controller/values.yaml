@@ -12,25 +12,26 @@ namespace: "nirmata"
 global:
   # The container registry from which images will be pulled.
   # Replace with your desired container registry.
-  imageRegistry: 844333597536.dkr.ecr.us-west-1.amazonaws.com
+  imageRegistry: ghcr.io
   # The repository from which images will be pulled.
   # Replace with your desired container repository.
   imageRepository: nirmata
-  
+
   # ImagePullSecret Configuration
   # Set to true to create the imagePullSecret, false to use an existing secret
-  createSecret: true
+  createSecret: false
   # Name of the imagePullSecret to use (created or existing)
-  imagePullSecretName: ecr-nirmata-controller-registry-secret
-  
+  imagePullSecretName: nirmata-controller-registry-secret
+
   # Credentials for the private container registry (required only if createSecret: true).
-  registryUserName: AWS
-  registryPassword: 
+  registryUserName:
+  registryPassword:
+
   # Usage Examples:
   # 1. Create secret with AWS ECR credentials:
   #    createSecret: true
-  #    registryUserName: AWS  
-  #    registryPassword: <raw-ecr-token>  # NOT base64 encoded!
+  #    registryUserName: AWS
+  #    registryPassword:
   #    imagePullSecretName: my-ecr-secret
   #
   # 2. Use existing secret:
@@ -42,6 +43,7 @@ global:
 otelAgent:
   # imageTag is the tag or version of the otel-agent image.
   imageTag: "0.92.0"
+  # resources defines the resource requests and limits for the otel-agent
   resources:
     requests:
       cpu: 100m
@@ -60,6 +62,7 @@ kubeController:
   customCaConfigMap: ""
   # insecure enables insecure communication with the Nirmata service (skips TLS verification)
   insecure: false
+  # resources defines the resource requests and limits for the nirmata-kube-controller
   resources:
     requests:
       cpu: 250m
@@ -70,28 +73,30 @@ kubeController:
 
 # cluster contains configuration related to the Kubernetes cluster which is being onboarded to NCH.
 cluster:
-  # name used for cluster by nch (Default: kubesystem namespace ID)
-  name: "onboarding-using-argo"
-  # type of the cluster categorised by nch. (Default value is "default-policy-manager-type")
+# name used for cluster by nch (Default: kubesystem namespace ID)
+  name: ""
+
+# type of the cluster categorised by nch. (Default value is "default-policy-manager-type")
   type: default-policy-manager-type
-  # labels is a set of key-value pairs that can be used to label the cluster while onboarding the cluster to Nirmata Control Hub.
-  # These labels are passed as command-line arguments to the Nirmata Kubernetes controller in the deployment.
-  # Example:
-  # labels:
-  #   key1: value1
-  #   key2: value2
-  #
-  # When set, the labels are reflected in the Helm template as follows:
-  # In the `deployment.yaml`:
-  #       - "-cluster-labels"
-  #       - "key1:value1"
-  #       - "-cluster-labels"
-  #       - "key2:value2"
+
+# labels is a set of key-value pairs that can be used to label the cluster while onboarding the cluster to Nirmata Control Hub.
+# These labels are passed as command-line arguments to the Nirmata Kubernetes controller in the deployment.
+# Example:
+# labels:
+#   key1: value1
+#   key2: value2
+#
+# When set, the labels are reflected in the Helm template as follows:
+# In the `deployment.yaml`:
+#       - "-cluster-labels"
+#       - "key1:value1"
+#       - "-cluster-labels"
+#       - "key2:value2"
   labels: {}
 
 # api token is just for registering the cluster to Nirmata Control Hub.
 # This token is required for the nirmata-kube-controller to communicate with the Nirmata Control Hub. (Required)
-apiToken: "<update the apitken from nirmata>"
+apiToken: "<update-with-your-api-token>"
 
 # apiTokenSecret is the name of the secret containing the API token.
 apiTokenSecret: "nirmata-api-token"
@@ -99,9 +104,9 @@ apiTokenSecret: "nirmata-api-token"
 # features enables or disables specific features while installing kube-controller.
 # features:
 #   policyExceptions:
-#     enabled: true
+#     enabled: false
 #   policySets:
-#     enabled: true
+#     enabled: false
 
 # readWriteMode determines whether the nirmata-kube-controller operates in read-write mode or read-only mode.
 # When set to `true`, the controller can make changes to the CR. When `false`, it operates in a read-only manner.

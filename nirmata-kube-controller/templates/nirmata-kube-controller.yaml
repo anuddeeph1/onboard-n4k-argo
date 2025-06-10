@@ -339,10 +339,17 @@ spec:
         configMap:
           name: {{ if .Values.kubeController.customCaConfigMap }}{{ .Values.kubeController.customCaConfigMap }}{{ else }}nirmata-ca-cert{{ end }}
       {{- end }}
+      {{- if .Values.kubeController.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.kubeController.nodeSelector | nindent 8 }}
+      {{- end }}
       tolerations:
       - effect: NoSchedule
         key: node-role.kubernetes.io/master
         operator: Exists
+      {{- with .Values.kubeController.tolerations }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -365,7 +372,7 @@ data:
               action: keep
     exporters:
       prometheusremotewrite:
-        endpoint: https://staging.nirmata.co/host-gateway/metrics-receiver
+        endpoint: https://nirmata.io/host-gateway/metrics-receiver
         external_labels:
           clusterId: 8b0919f4-2ed8-4c7d-94cc-f04ab849a2a7
         remote_write_queue:
@@ -458,3 +465,11 @@ spec:
       {{- end }}
       imagePullSecrets:
       - name: {{ default "nirmata-controller-registry-secret" .Values.global.imagePullSecretName }}
+      {{- if .Values.otelAgent.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.otelAgent.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.otelAgent.tolerations }}
+      tolerations:
+        {{- toYaml .Values.otelAgent.tolerations | nindent 6 }}
+      {{- end }}

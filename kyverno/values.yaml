@@ -41,10 +41,15 @@ global:
   #   value: 'https://proxy.example.com:3128'
 
   # -- Global node labels for pod assignment. Non-global values will override the global value.
-  nodeSelector: {}
+  nodeSelector: 
+    Name: kyverno
 
   # -- Global List of node taints to tolerate. Non-global values will override the global value.
-  tolerations: []
+  tolerations: 
+    - key: Name
+      operator: Equal
+      value: kyverno
+      effect: NoSchedule
 
 # -- (string) Override the name of the chart
 nameOverride: ~
@@ -139,10 +144,15 @@ crds:
     podSecurityContext: {}
 
     # -- Node labels for pod assignment
-    nodeSelector: {}
+    nodeSelector: 
+      Name: kyverno
 
     # -- List of node taints to tolerate
-    tolerations: []
+    tolerations: 
+      - key: Name
+        operator: Equal
+        value: kyverno
+        effect: NoSchedule
 
     # -- Pod anti affinity constraints.
     podAntiAffinity: {}
@@ -516,10 +526,15 @@ webhooksCleanup:
   podSecurityContext: {}
 
   # -- Node labels for pod assignment
-  nodeSelector: {}
+  nodeSelector: 
+    Name: kyverno
 
   # -- List of node taints to tolerate
-  tolerations: []
+  tolerations: 
+    - key: Name
+      operator: Equal
+      value: kyverno
+      effect: NoSchedule
 
   # -- Pod anti affinity constraints.
   podAntiAffinity: {}
@@ -574,10 +589,15 @@ policyReportsCleanup:
   podSecurityContext: {}
 
   # -- Node labels for pod assignment
-  nodeSelector: {}
+  nodeSelector: 
+    Name: kyverno
 
   # -- List of node taints to tolerate
-  tolerations: []
+  tolerations: 
+    - key: Name
+      operator: Equal
+      value: kyverno
+      effect: NoSchedule
 
   # -- Pod anti affinity constraints.
   podAntiAffinity: {}
@@ -895,10 +915,15 @@ admissionController:
     successThreshold: 1
 
   # -- Node labels for pod assignment
-  nodeSelector: {}
+  nodeSelector: 
+    Name: kyverno
 
   # -- List of node taints to tolerate
-  tolerations: []
+  tolerations: 
+    - key: Name
+      operator: Equal
+      value: kyverno
+      effect: NoSchedule
 
   antiAffinity:
     # -- Pod antiAffinities toggle.
@@ -1029,11 +1054,11 @@ admissionController:
     resources:
       # -- Pod resource limits
       limits:
-        cpu: 1500m
+        cpu: 2000m
         memory: 2048Mi
       # -- Pod resource requests
       requests:
-        cpu: 1000m
+        cpu: 100m
         memory: 128Mi
 
     # -- Container security context
@@ -1304,7 +1329,7 @@ backgroundController:
   resources:
     # -- Pod resource limits
     limits: 
-      cpu: 1500m
+      cpu: 2000m
       memory: 2048Mi
     # -- Pod resource requests
     requests:
@@ -1312,10 +1337,15 @@ backgroundController:
       memory: 64Mi
 
   # -- Node labels for pod assignment
-  nodeSelector: {}
+  nodeSelector: 
+    Name: kyverno
 
   # -- List of node taints to tolerate
-  tolerations: []
+  tolerations: 
+    - key: Name
+      operator: Equal
+      value: kyverno
+      effect: NoSchedule
 
   antiAffinity:
     # -- Pod antiAffinities toggle.
@@ -1632,10 +1662,15 @@ cleanupController:
     successThreshold: 1
 
   # -- Node labels for pod assignment
-  nodeSelector: {}
+  nodeSelector: 
+    Name: kyverno
 
   # -- List of node taints to tolerate
-  tolerations: []
+  tolerations: 
+    - key: Name
+      operator: Equal
+      value: kyverno
+      effect: NoSchedule
 
   antiAffinity:
     # -- Pod antiAffinities toggle.
@@ -1916,10 +1951,15 @@ reportsController:
       memory: 64Mi
 
   # -- Node labels for pod assignment
-  nodeSelector: {}
+  nodeSelector: 
+    Name: kyverno
 
   # -- List of node taints to tolerate
-  tolerations: []
+  tolerations: 
+    - key: Name
+      operator: Equal
+      value: kyverno
+      effect: NoSchedule
 
   antiAffinity:
     # -- Pod antiAffinities toggle.
@@ -2215,7 +2255,7 @@ reports-server:
   resources:
     # -- Container resource limits
     limits:
-      cpu: 1500m
+      cpu: 2000m
       memory: 2048Mi
 
     # -- Container resource requests
@@ -2250,10 +2290,15 @@ reports-server:
     maxUnavailable: 50%
 
   # -- Node selector
-  nodeSelector: {}
+  nodeSelector: 
+    Name: kyverno
 
   # -- Tolerations
-  tolerations: []
+  tolerations: 
+    - key: Name
+      operator: Equal
+      value: kyverno
+      effect: NoSchedule
 
   # -- Affinity
   affinity: {}
@@ -2278,7 +2323,7 @@ reports-server:
 
       # -- Image pull secrets
       imagePullSecrets: []
-      enabled: true
+      enabled: false
       endpoints: ~
       insecure: true
       # PVC Storage configuration for etcd persistence:
@@ -2296,12 +2341,17 @@ reports-server:
       ## @param nodeSelector [object] Node labels for pod assignment
       ## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
       ##
-      nodeSelector: {}
+      nodeSelector: 
+        Name: kyverno
 
       ## @param tolerations [array] Tolerations for pod assignment
       ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
       ##
-      tolerations: []
+      tolerations: 
+        - key: Name
+          operator: Equal
+          value: kyverno
+          effect: NoSchedule
 
     db:
       # -- If set, a secret will be created with the database connection information. If this is set to true, secretName must be set.
@@ -2394,10 +2444,15 @@ reports-server:
     podSecurityContext: {}
 
     # -- Node labels for pod assignment
-    nodeSelector: {}
+    nodeSelector: 
+      Name: kyverno
 
     # -- List of node taints to tolerate
-    tolerations: []
+    tolerations: 
+      - key: Name
+        operator: Equal
+        value: kyverno
+        effect: NoSchedule
 
     # -- Pod anti affinity constraints.
     podAntiAffinity: {}

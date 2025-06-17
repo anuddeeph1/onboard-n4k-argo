@@ -16,12 +16,12 @@ annotations:
   artifacthub.io/operator: "false"
   artifacthub.io/prerelease: "false"
 apiVersion: v2
-appVersion: v1.13.6-n4k.nirmata.1
+appVersion: v1.13.6-n4k.nirmata.2
 dependencies:
 - condition: reports-server.enabled
   name: reports-server
   repository: https://nirmata.github.io/reports-server
-  version: 0.1.26
+  version: 0.1.29
 - condition: grafana.enabled
   name: grafana
   repository: ""
@@ -54,4 +54,4 @@ name: kyverno
 sources:
 - https://github.com/nirmata/enterprise-kyverno
 type: application
-version: 3.3.20
+version: 3.3.22

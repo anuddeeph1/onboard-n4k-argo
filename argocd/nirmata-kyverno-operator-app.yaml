@@ -16,7 +16,7 @@ spec:
         - values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: nirmata-kyverno-operator
+    namespace: nirmata-system
   syncPolicy:
     automated:
       prune: true

@@ -132,7 +132,7 @@ apiToken: "JQOoQi0ToMw0InI77pbofEKVruq3JuwxU2W1lH6gz+/YnM+hQJsyZHZOlycpV+BXG7Kyg
 clusterOnboardingToken: ""
 
 # apiTokenSecret is the name of the secret containing the API token.
-apiTokenSecret: "nirmata-api-token-secret"
+apiTokenSecret: ""
 
 # features enables or disables specific features while installing kube-controller.
 features:

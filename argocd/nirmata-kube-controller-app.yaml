@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/anuddeeph1/onboard-n4k-argo.git
-    targetRevision: main
+    targetRevision: reports-server
     path: nirmata-kube-controller
     helm:
       valueFiles:

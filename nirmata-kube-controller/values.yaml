@@ -135,11 +135,11 @@ clusterOnboardingToken: ""
 apiTokenSecret: "nirmata-api-token-secret"
 
 # features enables or disables specific features while installing kube-controller.
- features:
-   policyExceptions:
-     enabled: true
-   policySets:
-     enabled: true
+features:
+  policyExceptions:
+    enabled: true
+  policySets:
+    enabled: true
 
 # readWriteMode determines whether the nirmata-kube-controller operates in read-write mode or read-only mode.
 # When set to `true`, the controller can make changes to the CR. When `false`, it operates in a read-only manner.

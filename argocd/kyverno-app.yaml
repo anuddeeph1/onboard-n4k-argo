@@ -9,8 +9,8 @@ spec:
   project: default
   source:
     repoURL: https://github.com/anuddeeph1/onboard-n4k-argo.git
-    targetRevision: main
-    path: kyverno
+    targetRevision: reports-server
+    path: reports-server
     helm:
       valueFiles:
         - values.yaml

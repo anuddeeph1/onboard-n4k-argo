@@ -26,10 +26,6 @@ annotations:
 apiVersion: v2
 appVersion: v1.14.3-n4k.nirmata.1
 dependencies:
-- condition: crds.reportsServer.enabled
-  name: reports-server
-  repository: https://nirmata.github.io/reports-server
-  version: 0.1.29
 - condition: grafana.enabled
   name: grafana
   repository: ""
@@ -62,4 +58,4 @@ name: kyverno
 sources:
 - https://github.com/nirmata/enterprise-kyverno
 type: application
-version: 3.4.0
+version: 3.4.1

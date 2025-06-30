@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/anuddeeph1/onboard-n4k-argo.git
     targetRevision: reports-server
-    path: reports-server
+    path: kyverno
     helm:
       valueFiles:
         - values.yaml

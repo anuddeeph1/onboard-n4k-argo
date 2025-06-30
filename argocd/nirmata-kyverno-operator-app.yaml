@@ -29,4 +29,13 @@ spec:
       backoff:
         duration: 5s
         factor: 2
-        maxDuration: 3m 
+        maxDuration: 3m
+  ignoreDifferences:
+    - group: ""
+      kind: Secret
+      name: webhook-server-cert
+      namespace: nirmata-system
+      jsonPointers:
+        - /data
+        - /metadata/resourceVersion
+        - /metadata/annotations 

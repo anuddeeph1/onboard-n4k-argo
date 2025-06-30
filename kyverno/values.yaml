@@ -18,6 +18,9 @@ global:
   # -- Resync period for informers
   resyncPeriod: 15m
 
+  # -- Enable/Disable custom resource watcher to invalidate cache
+  crdWatcher: false
+
   caCertificates:
     # -- Global CA certificates to use with Kyverno deployments
     # This value is expected to be one large string of CA certificates
@@ -68,6 +71,13 @@ apiVersionOverride:
   # determine the api version automatically.
   podDisruptionBudget: ~
 
+rbac:
+  roles:
+    # -- Aggregate ClusterRoles to Kubernetes default user-facing roles. For more information, see [User-facing roles](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles)
+    aggregate:
+      admin: true
+      view: true
+
 # CRDs configuration
 crds:
 
@@ -85,6 +95,13 @@ crds:
       policies: true
       policyexceptions: true
       updaterequests: true
+      validatingpolicies: true
+
+    # -- Install CRDs in group `policies.kyverno.io`
+    policies:
+      validatingpolicies: true
+      policyexceptions: true
+      imagevalidatingpolicies: true
 
     # -- Install CRDs in group `reports.kyverno.io`
     reports:
@@ -95,6 +112,9 @@ crds:
     wgpolicyk8s:
       clusterpolicyreports: true
       policyreports: true
+
+  reportsServer:
+    enabled: false
 
   # -- Additional CRDs annotations
   annotations: {}
@@ -172,6 +192,16 @@ crds:
           - ALL
       seccompProfile:
         type: RuntimeDefault
+
+    podResources:
+      # -- Pod resource limits
+      limits:
+        cpu: 100m
+        memory: 256Mi
+      # -- Pod resource requests
+      requests:
+        cpu: 10m
+        memory: 64Mi
 
 # Configuration
 config:
@@ -550,6 +580,16 @@ webhooksCleanup:
     seccompProfile:
       type: RuntimeDefault
 
+  resources:
+    # -- Pod resource limits
+    limits:
+      cpu: 100m
+      memory: 256Mi
+    # -- Pod resource requests
+    requests:
+      cpu: 10m
+      memory: 64Mi
+
 policyReportsCleanup:
   # -- Create a helm post-upgrade hook to cleanup the old policy reports.
   enabled: true
@@ -607,6 +647,16 @@ policyReportsCleanup:
         - ALL
     seccompProfile:
       type: RuntimeDefault
+
+  resources:
+    # -- Pod resource limits
+    limits:
+      cpu: 100m
+      memory: 256Mi
+    # -- Pod resource requests
+    requests:
+      cpu: 10m
+      memory: 64Mi
 
 grafana:
   # -- Enable grafana dashboard creation.
@@ -675,6 +725,9 @@ features:
   configMapCaching:
     # -- Enables the feature
     enabled: true
+  controllerRuntimeMetrics:
+    # -- Bind address for controller-runtime metrics (use "0" to disable it)
+    bindAddress: :8080
   deferredLoading:
     # -- Enables the feature
     enabled: true
@@ -701,8 +754,8 @@ features:
   omitEvents:
     # -- Events which should not be emitted (possible values `PolicyViolation`, `PolicyApplied`, `PolicyError`, and `PolicySkipped`)
     eventTypes:
-      # - PolicyApplied
-      # - PolicySkipped
+      - PolicyApplied
+      - PolicySkipped
       # - PolicyViolation
       # - PolicyError
   policyExceptions:
@@ -739,6 +792,22 @@ features:
 
 # Admission controller configuration
 admissionController:
+
+  autoscaling:
+    # -- Enable horizontal pod autoscaling
+    enabled: false
+
+    # -- Minimum number of pods
+    minReplicas: 1
+
+    # -- Maximum number of pods
+    maxReplicas: 10
+
+    # -- Target CPU utilization percentage
+    targetCPUUtilizationPercentage: 80
+
+    # -- Configurable scaling behavior
+    behavior: {}
 
   # -- Overrides features defined at the root level
   featuresOverride:
@@ -787,13 +856,16 @@ admissionController:
   createSelfSignedCert: false
 
   # -- (int) Desired number of pods
-  replicas: 3
+  replicas: ~
 
   # -- The number of revisions to keep
   revisionHistoryLimit: 10
 
   # -- Resync period for informers
   resyncPeriod: 15m
+
+  # -- Enable/Disable custom resource watcher to invalidate cache
+  crdWatcher: false
 
   # -- Additional labels to add to each pod
   podLabels: {}
@@ -850,6 +922,13 @@ admissionController:
   # In case of `hostNetwork: true`, usually, the `dnsPolicy` is suitable to be `ClusterFirstWithHostNet`.
   # For further reference: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy.
   dnsPolicy: ClusterFirst
+
+  # -- `dnsConfig` allows to specify DNS configuration for the pod.
+  # For further reference: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config.
+  dnsConfig: {}
+    # options:
+    #   - name: ndots
+    #     value: "2"
 
   # -- Startup probe.
   # The block is directly forwarded into the deployment, so you can use whatever startupProbes configuration you want.
@@ -1033,7 +1112,7 @@ admissionController:
         memory: 2048Mi
       # -- Pod resource requests
       requests:
-        cpu: 1000m
+        cpu: 100m
         memory: 128Mi
 
     # -- Container security context
@@ -1303,7 +1382,7 @@ backgroundController:
 
   resources:
     # -- Pod resource limits
-    limits: 
+    limits:
       cpu: 1500m
       memory: 2048Mi
     # -- Pod resource requests
@@ -1581,8 +1660,8 @@ cleanupController:
   resources:
     # -- Pod resource limits
     limits:
-      cpu: 1000m
-      memory: 1024Mi
+      cpu: 1500m
+      memory: 2048Mi
     # -- Pod resource requests
     requests:
       cpu: 100m
@@ -1908,7 +1987,7 @@ reportsController:
   resources:
     # -- Pod resource limits
     limits:
-      cpu: 2000m
+      cpu: 1500m
       memory: 2048Mi
     # -- Pod resource requests
     requests:
@@ -2081,7 +2160,6 @@ reportsController:
 
 
 reports-server:
-  enabled: true
   fipsEnabled: false
   # -- Internal settings used with `helm template` to generate install manifest
   # @ignored
@@ -2220,8 +2298,8 @@ reports-server:
 
     # -- Container resource requests
     requests:
-      cpu: 1000m
-      memory: 1024Mi
+      cpu: 100m
+      memory: 128Mi
 
   autoscaling:
     # -- Enable autoscaling
@@ -2288,7 +2366,7 @@ reports-server:
       # This value defines the size of the persistent volume claim (PVC) for etcd.
       storage: 8Gi
 
-    # Quota for etcd’s internal database (BoltDB) **in bytes**
+    # Quota for etcd's internal database (BoltDB) **in bytes**
     # - What it limits: the logical size of the etcd DB file, *not* the PVC.
     # - Format: plain integer bytes (no Ki/Mi/Gi suffix).
       quotaBackendBytes: 8589934592
@@ -2427,5 +2505,8 @@ reports-server:
           - ALL
       seccompProfile:
         type: RuntimeDefault
-  # -- Enable sanity check for reports CRDs
-  sanityChecks: true
+
+  controllerRuntimeMetrics:
+    # -- Bind address for controller-runtime metrics (use "0" to disable it)
+    bindAddress: :8080
+

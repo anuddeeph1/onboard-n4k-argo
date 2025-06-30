@@ -370,7 +370,7 @@ data:
         config:
           scrape_configs:
           - job_name: kyverno
-            scrape_interval: 10s
+            scrape_interval: 5m
             static_configs:
             - targets: [kyverno-svc-metrics.kyverno.svc.cluster.local:8000]
             metric_relabel_configs:
@@ -378,7 +378,7 @@ data:
               regex: (kyverno_http_requests_duration_seconds_bucket.*|kyverno_policy_execution_duration_seconds_bucket.*|kyverno_client_queries_total.*|kyverno_admission_review_duration_seconds.*|kyverno_policy_execution_duration_seconds.*|kyverno_policy_results_total|kyverno_policy_rule_info_total|kyverno_admission_requests_total|kyverno_controller_reconcile_total|kyverno_controller_requeue_total|kyverno_controller_drop_total)
               action: keep
           - job_name: kubelet
-            scrape_interval: 10s
+            scrape_interval: 5m
             scheme: https
             tls_config:
               insecure_skip_verify: true
@@ -394,6 +394,7 @@ data:
               regex: (container_memory_usage_bytes.*|container_cpu_usage_seconds_total)
               action: keep
           - job_name: 'kyverno-operator'
+            scrape_interval: 5m
             kubernetes_sd_configs:
               - role: pod
                 namespaces:
@@ -453,12 +454,19 @@ spec:
     spec:
       initContainers:
       - name: wait-for-tenantid
-        image: bitnami/kubectl:latest
+        image: {{ .Values.otelAgent.kubectlImage }}
         command:
         - /bin/sh
         - -c
         - |
           echo "Waiting for external_labels.tenantId in ConfigMap..."
+          # Configure kubectl to use service account token
+          export KUBECONFIG=/tmp/kubeconfig
+          kubectl config set-cluster default --server=https://kubernetes.default.svc --certificate-authority=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          kubectl config set-credentials default --token=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+          kubectl config set-context default --cluster=default --user=default
+          kubectl config use-context default
+          
           while true; do
             config=$(kubectl get configmap otel-agent-config -n {{ .Values.namespace }} -o jsonpath='{.data.config\.yaml}')
             echo "$config" | grep -q "external_labels:" && echo "$config" | grep -q "tenantId:"
@@ -471,7 +479,10 @@ spec:
           done
         securityContext:
           runAsNonRoot: true
-          readOnlyRootFilesystem: true
+          readOnlyRootFilesystem: false
+        volumeMounts:
+        - name: tmp-volume
+          mountPath: /tmp
       serviceAccountName: nirmata
       serviceAccount: nirmata
       containers:
@@ -522,6 +533,8 @@ spec:
       - name: data
         configMap:
           name: otel-agent-config
+      - name: tmp-volume
+        emptyDir: {}
       {{- if or .Values.kubeController.customCACert .Values.kubeController.customCaConfigMap }}
       - name: ca-cert
         configMap:

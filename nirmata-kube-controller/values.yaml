@@ -129,7 +129,7 @@ cluster:
 # This token is required for the nirmata-kube-controller to communicate with the Nirmata Control Hub. (Required)
 apiToken: "JQOoQi0ToMw0InI77pbofEKVruq3JuwxU2W1lH6gz+/YnM+hQJsyZHZOlycpV+BXG7KygI/xrTJVJTBq6PZFpQ=="
 
-clusterOnboardingToken: ""
+clusterOnboardingToken: "MDIxZmE2MTEtMmRmMi00NmNiLTkyZjQtMmU1ZTI4OTc2NjE0"
 
 # apiTokenSecret is the name of the secret containing the API token.
 apiTokenSecret: "nirmata-api-token"

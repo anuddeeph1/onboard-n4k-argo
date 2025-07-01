@@ -488,7 +488,7 @@ spec:
       containers:
       - name: otel-agent
         command:
-        - /otelcol
+        - /otelcol-contrib
         - --config=/etc/otel/config.yaml
         image: "{{ .Values.global.imageRegistry }}/{{ .Values.global.imageRepository }}/opentelemetry-collector:{{ .Values.otelAgent.imageTag }}"
         resources:

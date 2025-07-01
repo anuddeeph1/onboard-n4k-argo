@@ -129,7 +129,7 @@ cluster:
 # This token is required for the nirmata-kube-controller to communicate with the Nirmata Control Hub. (Required)
 apiToken: "JQOoQi0ToMw0InI77pbofEKVruq3JuwxU2W1lH6gz+/YnM+hQJsyZHZOlycpV+BXG7KygI/xrTJVJTBq6PZFpQ=="
 
-clusterOnboardingToken: "MDIxZmE2MTEtMmRmMi00NmNiLTkyZjQtMmU1ZTI4OTc2NjE0"
+clusterOnboardingToken: "ZTdiMjcxMDAtZDEyNi00YzRiLWFlMmYtOTBkZWNiYzg2NDhm"
 
 # apiTokenSecret is the name of the secret containing the API token.
 apiTokenSecret: "nirmata-api-token"
@@ -137,9 +137,9 @@ apiTokenSecret: "nirmata-api-token"
 # features enables or disables specific features while installing kube-controller.
 features:
   policyExceptions:
-    enabled: false
+    enabled: true
   policySets:
-    enabled: false
+    enabled: true
 
 # readWriteMode determines whether the nirmata-kube-controller operates in read-write mode or read-only mode.
 # When set to `true`, the controller can make changes to the CR. When `false`, it operates in a read-only manner.

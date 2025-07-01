@@ -105,7 +105,7 @@ kubeController:
 # cluster contains configuration related to the Kubernetes cluster which is being onboarded to NCH.
 cluster:
 # name used for cluster by nch (Default: kubesystem namespace ID)
-  name: "anup-cluster"
+  name: ""
 
 # type of the cluster categorised by nch. (Default value is "default-policy-manager-type")
   type: default-policy-manager-type
@@ -127,23 +127,24 @@ cluster:
 
 # api token is just for registering the cluster to Nirmata Control Hub.
 # This token is required for the nirmata-kube-controller to communicate with the Nirmata Control Hub. (Required)
-apiToken: "JQOoQi0ToMw0InI77pbofEKVruq3JuwxU2W1lH6gz+/YnM+hQJsyZHZOlycpV+BXG7KygI/xrTJVJTBq6PZFpQ=="
+apiToken: ""
 
 clusterOnboardingToken: ""
 
 # apiTokenSecret is the name of the secret containing the API token.
-apiTokenSecret: ""
+apiTokenSecret: "nirmata-api-token"
 
 # features enables or disables specific features while installing kube-controller.
-features:
-  policyExceptions:
-    enabled: true
-  policySets:
-    enabled: true
+# features:
+#   policyExceptions:
+#     enabled: false
+#   policySets:
+#     enabled: false
 
 # readWriteMode determines whether the nirmata-kube-controller operates in read-write mode or read-only mode.
 # When set to `true`, the controller can make changes to the CR. When `false`, it operates in a read-only manner.
-readWriteMode: true
+readWriteMode: false
+
 # isNpmOnly determines whether the nirmata-kube-controller is only for NPM.
 isNpmOnly: false
 

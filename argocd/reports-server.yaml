@@ -30,8 +30,8 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m
-  ignoreDifferences:
-    - group: apps
-      kind: StatefulSet
-      managedFieldsManagers:
-        - kube-controller-manager
+#  ignoreDifferences:
+#    - group: apps
+#      kind: StatefulSet
+#      managedFieldsManagers:
+#        - kube-controller-manager

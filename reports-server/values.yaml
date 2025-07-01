@@ -286,7 +286,7 @@ apiServicesManagement:
   installApiServices:
 
     # -- Store reports in reports-server
-    enabled: true
+    enabled: false
 
     # -- Store ephemeral reports in reports-server
     installEphemeralReportsService: true

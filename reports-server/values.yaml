@@ -3,20 +3,12 @@
 templating:
   enabled: false
 fipsEnabled: false
-cloudnative-pg:
-  crds:
-    create: false
 
-postgresql:
 
-  # -- Deploy postgresql dependency chart
-  enabled: false
+# cloudnative-pg:
+#   crds:
+#     create: false
 
-  auth:
-
-    postgresPassword: reports
-
-    database: reportsdb
 
 # -- Name override
 nameOverride: ""
@@ -135,8 +127,8 @@ resources:
 
   # -- Container resource requests
   requests:
-    cpu: 1000m
-    memory: 2048Mi
+    cpu: 100m
+    memory: 128Mi
 
 autoscaling:
   # -- Enable autoscaling
@@ -204,7 +196,7 @@ config:
     # This value defines the size of the persistent volume claim (PVC) for etcd.
     storage: 8Gi
 
-  # Quota for etcd's internal database (BoltDB) **in bytes**
+  # Quota for etcd’s internal database (BoltDB) **in bytes**
   # - What it limits: the logical size of the etcd DB file, *not* the PVC.
   # - Format: plain integer bytes (no Ki/Mi/Gi suffix).
     quotaBackendBytes: 8589934592
@@ -279,9 +271,6 @@ config:
       mountPath: "/etc/ssl/rds"
 
 apiServicesManagement:
-  # -- Create a helm hooks to delete api services on uninstall
-  enabled: true
-
   # -- Install api services in manifest
   installApiServices:
 
@@ -291,8 +280,13 @@ apiServicesManagement:
     # -- Store ephemeral reports in reports-server
     installEphemeralReportsService: true
 
+  migrateReportsServer:
+    # -- Create api services only when reports-server is ready and migration is guaranteed
+    enabled: false
+
+
+jobConfigurations:
   image:
-    # -- (string) Image registry
     # -- (string) Image registry
     registry: ghcr.io
     # -- Image repository

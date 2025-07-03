@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/anuddeeph1/onboard-n4k-argo.git
-    targetRevision: fix-argo-reports-server
+    targetRevision: fix-argo-reports-server-1.13
     path: nirmata-kyverno-operator
     helm:
       valueFiles:

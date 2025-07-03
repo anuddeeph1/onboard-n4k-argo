@@ -1,39 +1,31 @@
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Added support for ValidatingPolicies and ImageValidatingPolicies CRDs
+      description: Add a key to preserve configmap settings during upgrade
     - kind: added
-      description: Added CRD watcher feature for improved performance
+      description: Make admission reports breaker threshold configurable
     - kind: added
-      description: Added Horizontal Pod Autoscaler support for admission controller
+      description: ImagePullSecrets made globally configurable
+    - kind: removed
+      description: Deprecated configuration `features.reports.chunkSize` was removed
     - kind: added
-      description: Added controller runtime metrics configuration
-    - kind: added
-      description: Added configurable RBAC role aggregation
-    - kind: added
-      description: Added DNS configuration support
-    - kind: added
-      description: Added resource limits for cleanup hooks
-    - kind: changed
-      description: Updated to Kubernetes 1.25+ minimum requirement
-    - kind: changed
-      description: Enhanced RBAC permissions for new CRD types
+      description: ImagePullSecrets made configurable for tests
   artifacthub.io/links: |
     - name: Documentation
       url: https://kyverno.io/docs
   artifacthub.io/operator: "false"
   artifacthub.io/prerelease: "false"
 apiVersion: v2
-appVersion: v1.14.3-n4k.nirmata.2
+appVersion: v1.13.6-n4k.nirmata.2
 dependencies:
 - condition: grafana.enabled
   name: grafana
   repository: ""
-  version: 3.4.3
+  version: 3.3.6
 - condition: crds.install
   name: crds
   repository: ""
-  version: 3.4.3
+  version: 3.3.6
 description: Kubernetes Native Policy Management
 home: https://kyverno.io/
 icon: https://github.com/kyverno/kyverno/raw/main/img/logo.png
@@ -50,7 +42,7 @@ keywords:
 - generate
 - supply chain
 - security
-kubeVersion: '>=1.25.0-0'
+kubeVersion: '>=1.22.0-0'
 maintainers:
 - name: Nirmata
   url: https://kyverno.io/
@@ -58,4 +50,4 @@ name: kyverno
 sources:
 - https://github.com/nirmata/enterprise-kyverno
 type: application
-version: 3.4.2
+version: 3.3.27

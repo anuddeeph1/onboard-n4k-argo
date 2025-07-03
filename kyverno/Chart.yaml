@@ -24,7 +24,7 @@ annotations:
   artifacthub.io/operator: "false"
   artifacthub.io/prerelease: "false"
 apiVersion: v2
-appVersion: v1.14.3-n4k.nirmata.1
+appVersion: v1.14.3-n4k.nirmata.2
 dependencies:
 - condition: grafana.enabled
   name: grafana
@@ -58,4 +58,4 @@ name: kyverno
 sources:
 - https://github.com/nirmata/enterprise-kyverno
 type: application
-version: 3.4.2-rc1
+version: 3.4.2

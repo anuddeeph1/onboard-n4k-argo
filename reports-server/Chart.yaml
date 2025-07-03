@@ -13,4 +13,4 @@ name: reports-server
 sources:
 - https://github.com/nirmata/reports-server
 type: application
-version: 0.2.0-rc1
+version: 0.2.0

@@ -24,14 +24,26 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
+      - SkipDryRunOnMissingResource=true
+      - DisableOpenAPIValidation=true
     retry:
       limit: 5
       backoff:
         duration: 5s
         factor: 2
         maxDuration: 3m
-#  ignoreDifferences:
-#    - group: apps
-#      kind: StatefulSet
-#      managedFieldsManagers:
-#        - kube-controller-manager
+  ignoreDifferences:
+    - group: apiregistration.k8s.io
+      kind: APIService
+      name: v1.reports.kyverno.io
+    - group: apiregistration.k8s.io
+      kind: APIService
+      name: v1alpha2.wgpolicyk8s.io
+    - group: apps
+      kind: StatefulSet
+      name: etcd
+      namespace: kyverno
+    - group: batch
+      kind: Job
+      namespace: kyverno
+      name: reports-server-post-install-install-api-services
